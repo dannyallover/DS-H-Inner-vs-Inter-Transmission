@@ -1,0 +1,207 @@
+\documentclass[12pt,english]{article}
+
+\usepackage[a4paper,
+            bindingoffset=0.2in,
+            left=1in,
+            right=1in,
+            top=1in,
+            bottom=1in,
+            footskip=.25in]{geometry}
+
+% % Set page size and margins
+% % Replace `letterpaper' with`a4paper' for UK/EU standard size
+% \usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\topmargin=-.3in \oddsidemargin=.3in \evensidemargin=.3in \textheight=9in \textwidth=6in
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{float}
+\usepackage{adjustbox}
+\usepackage{multirow}
+\usepackage{hhline}
+
+\usepackage{algorithm, algpseudocode}
+\usepackage{setspace}
+
+\algrenewcommand\textproc{}
+
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+\algnewcommand\algorithmicassert{\texttt{assert}}
+\algnewcommand\Assert[1]{\State \algorithmicassert(#1)}%
+% New "environments"
+\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\newcommand{\pluseq}{\mathrel{{+}{=}}}
+\algblockdefx[Foreach]{Foreach}{EndForeach}[1]{\textbf{foreach} #1 \textbf{do}}{\textbf{end foreach}}
+
+
+% \newcommand{\makeheight}[1]{%
+%   \settoheight{\dimen0}{T}% a capital letter
+%   \rule[-\dimexpr(#1-\dimen0)/2]{0pt}{#1}%
+% }
+
+\newcommand{\myindent}[1]{
+\newline\makebox[#1cm]{}
+}
+
+\usepackage{amsmath}
+
+\usepackage{pdfpages}
+
+
+
+\title{\textbf{Appendix}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Transmitter City Ratios}
+\begin{center}
+\begin{minipage}{.8\linewidth}
+\begin{algorithm}[H]
+\setstretch{1}
+\caption{Assign Transmitter City Ratios}\label{euclid}
+% \hspace*{\algorithmicindent} \textbf{Output} \textit{space} (hashmap of transmission cities to volume)
+\begin{algorithmic}[1]
+\Require transmitter, teachers, students, bios
+\State city\_count $\gets$ \{key: city $\mapsto$ value: count\}
+\State shared\_s $\gets$ students who share a city with transmitter 
+\State shared\_t $\gets$ teachers who share a city with transmitter
+\State non\_shared $\gets$ teachers and students who don't share a city with \myindent{2.4} transmitter
+\State transmitter\_cities $\gets$ cities of transmitter from bios
+\Foreach{\text{student} $\in$ \text{shared\_s}}
+\State student\_cities $\gets$ cities of student from bios
+\State common\_cities $\gets$ \textbf{Intersection}[transmitter\_cities, \myindent{5.95} student\_cities]
+    \Foreach{\text{city} $\in$ \text{common\_cities}}
+    \State city\_count[city] += edge count of transmitter $\veryshortarrow$ student
+    \EndForeach
+\EndForeach
+\Foreach{\text{student} $\in$ \text{shared\_t}}
+\State teacher\_cities $\gets$ cities of teacher from bios
+\State common\_cities $\gets$ \textbf{Intersection}[transmitter\_cities, \myindent{5.95} teacher\_cities]
+    \Foreach{\text{city} $\in$ \text{common\_cities}}
+    \State city\_count[city] += edge count of transmitter $\veryshortarrow$ teacher
+    \EndForeach
+\EndForeach
+\Foreach{$\rho$ $\in$ \text{non\_shared}}
+    \Foreach{\text{city} $\in$ \text{transmitter\_cities}}
+    \State city\_count[city] += edge count of \{transmitter, $\rho$\} edge
+    \EndForeach
+\EndForeach
+\State \textit{city\_ratios} $\gets$ divide each value in city\_count by total count
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}
+\end{center}
+
+
+
+
+\newpage
+\section{Transmission Space Assignment}
+\begin{center}
+\begin{minipage}{.8\linewidth}
+\begin{algorithm}[H]
+\setstretch{1}
+\caption{Place Transmission in Space}\label{euclid}
+% \hspace*{\algorithmicindent} \textbf{Output} \textit{space} (hashmap of transmission cities to volume)
+\begin{algorithmic}[1]
+\Require teacher\_cities, teacher\_city\_ratios, student\_cities, \myindent{1} num\_transmissions
+\State \textit{space} $\gets$ \{key: city $\mapsto$	
+ value: count\}
+\State common\_cities $\gets$ \textbf{Intersection}[teacher\_cities, student\_cities]
+\State len\_common\_cities $\gets$ \textbf{Length}[common\_cities]
+\Switch{len\_common\_cities}
+    \Case{$== 1:$} \hfill \texttt{\small{/* Share one city */}}
+      \State space[common\_city] $\pluseq$ num\_transmissions
+    \EndCase
+    \Case{$> 1:$} \hfill \texttt{\small{/* Share more than one city */}}
+      \Foreach{\text{city} $\in$ common\_cities}
+        \State ratio $\gets$ teacher\_city\_ratios[city]
+        \State space[city] $\pluseq$ num\_transmissions * ratio
+      \EndForeach
+    \EndCase
+    \Case{$== 0:$} \hfill \texttt{\small{/* Share no cities */}}
+        \Foreach{\text{city} $\in$ teacher\_cities}
+            \State ratio $\gets$ teacher\_city\_ratios[city]
+            \State space[city] $\pluseq$ num\_transmissions * ratio
+        \EndForeach
+    \EndCase
+\EndSwitch
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}
+\end{center}
+
+\newpage
+\begin{center}
+\begin{minipage}{.8\linewidth}
+\setstretch{1}
+\begin{align}
+\textbf{let:\ } & \text{teacher}_{1}\textbf{:\ }  \text{cities}_{t_{1}} = \{ c_{1}, c_{2}, c_{3}\} \\
+& \hphantom{aaaaaa..} \text{ratios}_{t_{1}} = [c_{1} \rightarrow r_{1}, c_{2} \rightarrow r_{2}, c_{3} \rightarrow r_{3}], \nonumber\\
+ & \text{student}_{1}\textbf{:\ } \text{cities}_{s_{1}} = \{ c_{1}, c_{5}, c_{6}\}, \nonumber \\
+ & \text{student}_{2}\textbf{:\ } \text{cities}_{s_{2}} = \{ c_{1}, c_{2}, c_{6}\}, \nonumber \\
+ & \text{student}_{3}\textbf{:\ } \text{cities}_{s_{3}} = \{ c_{5}, c_{7}\}, \nonumber \\
+\textbf{s.t.\ } &  \textstyle{\sum_{i = 1}^{3}{r_{i} = 1}} \implies
+ 0 <= (r_{i})_{1 <= i <= 3} <= 1 \text{ \& } c_{i} \in \text{city\_corpus}. \nonumber \\
+\textbf{let:\ } & \text{teacher}_{1} \veryshortarrow \text{student}_{1}, \text{count} = V_{t_{1}\rightarrow s_{1}}, \\
+& \text{teacher}_{1} \veryshortarrow \text{student}_{2}, \text{count} = V_{t_{1}\rightarrow s_{2}}\text{,}  \nonumber \\
+& \text{teacher}_{1} \veryshortarrow \text{student}_{3}, \text{count} = V_{t_{1}\rightarrow s_{3}}.  \nonumber \\
+\textbf{case 1}\textbf{:\ }  & \texttt{one city shared} \\
+& \text{cities}_{t_{1}} \cap \text{cities}_{s_{1}} = \{c_{1}\} = X, \nonumber \\
+& \text{since } |X| = 1 \text{:} \nonumber \\
+& V_{t_{1}\rightarrow s_{1}} \text{ placed in } c_{1}.\ \nonumber \\
+\textbf{case 2}\textbf{:\ }  & \texttt{more than one city shared} \\
+& \text{cities}_{t_{1}} \cap \text{cities}_{s_{2}} = \{c_{1}, c_{2}\} = Y, \nonumber \\
+& \text{since } |Y| = 2 > 1 \text{:} \nonumber \\
+& \textstyle{[V_{t_{1}\rightarrow s_{2}} * \frac{r_{1}}{(r_{1} + r_{2})}]} \text{ placed in } c_{1},\ \nonumber \\
+& \textstyle{[V_{t_{1}\rightarrow s_{2}} * \frac{r_{2}}{(r_{1} + r_{2})}]} \text{ placed in } c_{2}.\ \nonumber \\
+\textbf{case 3}\textbf{:\ }  & \texttt{no cities shared} \\
+& \text{cities}_{t_{1}} \cap \text{cities}_{s_{3}} = \{\} = Z, \nonumber \\
+& \text{since } |Z| = 0 \text{:} \nonumber \\
+& V_{t_{1}\rightarrow s_{3}} \text{ get placed in the teacher's cities, i.e.\ } \nonumber \\
+&  \textstyle{[r_{1} * V_{t_{1}\rightarrow s_{3}}]} \text{ in } c_{1}, \textstyle{[r_{2} * V_{t_{1}\rightarrow s_{3}}]} \text{ in } c_{2} \text {, and } \textstyle{[r_{3} * V_{t_{1}\rightarrow s_{3}}]} \text{ in } c_{3}.\ \nonumber
+\end{align}
+\end{minipage}
+\end{center}
+
+\newpage
+\section{Transmission Time Assignment} % example of a heading
+\begin{center}
+\begin{minipage}{.8\linewidth}
+\begin{algorithm}[H]
+\setstretch{1}
+\caption{Place Transmission in Time Span}\label{euclid}
+\begin{algorithmic}[1]
+\Require teacher\_bio, student\_bio
+\State const\_lifespan = 80
+\State const\_childhood = 20
+\State death\_date\_teacher $\gets$ death date from  teacher\_bio
+\State death\_date\_student $\gets$ death date from student\_bio
+\If{birth\_date $\in$ teacher\_bio}
+    \State birth\_date\_teacher $\gets$ birth date from  teacher\_bio
+\Else
+    \State birth\_date\_teacher $\gets$ death\_date\_teacher \myindent{4.2} $-$  const\_lifespan
+\EndIf 
+\If{birth\_date $\in$ student\_bio}
+    \State birth\_date\_teacher $\gets$ birth date from student\_bio
+\Else
+    \State birth\_date\_student $\gets$ death\_date\_student \myindent{4.2} $-$ const\_lifespan
+\EndIf 
+\State upper\_bound $\gets$ \textbf{min}(death\_date\_teacher, death\_date\_student)
+\State lower\_bound $\gets$ \textbf{max}(birth\_date\_teacher, birth\_date\_student)
+% \EndProcedure
+\If{upper\_bound $-$ lower\_bound $>$ const\_childhood}
+    \State lower\_bound $\mathrel{+}=$ const\_childhood
+\EndIf 
+\State \textit{time\_span} $\gets$ (lower\_bound, upper\_bound)
+% \State return \textit{time}
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}
+\end{center}
+
+\end{document}

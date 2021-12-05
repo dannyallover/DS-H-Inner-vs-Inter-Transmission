@@ -10,10 +10,10 @@
 % change next 3 lines each issue
 \topmargin=-.3in \oddsidemargin=.3in \evensidemargin=.3in \textheight=9in \textwidth=6in
 \pagestyle{fancy} 
-\fancyhead[L]{\protect\small \href{\jref}{\jhead}, \jdate}
-\fancyhead[R]{\protect\small Mode of Transmission Diagrams} % replace with running head
+\fancyhead[L]{\protect\small \href{\jref}{\jhead} \jdate}
+\fancyhead[R]{\protect\small Inner vs Inter City Movement} % replace with running head
 \fancypagestyle{firstpage}{%
- \lhead{\protect\small \href{\jref}{\jhead}, \jdate}
+ \lhead{\protect\small \href{\jref}{\jhead} \jdate}
  \rhead{}
 }
 \usepackage{caption}
@@ -81,6 +81,38 @@
 \usepackage{changepage}
 \usepackage{adjustbox}
 
+
+\usepackage{algorithm, algpseudocode}
+\usepackage{setspace}
+
+\algrenewcommand\textproc{}
+
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+\algnewcommand\algorithmicassert{\texttt{assert}}
+\algnewcommand\Assert[1]{\State \algorithmicassert(#1)}%
+% New "environments"
+\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\newcommand{\pluseq}{\mathrel{{+}{=}}}
+\algblockdefx[Foreach]{Foreach}{EndForeach}[1]{\textbf{foreach} #1 \textbf{do}}{\textbf{end foreach}}
+
+
+% \newcommand{\makeheight}[1]{%
+%   \settoheight{\dimen0}{T}% a capital letter
+%   \rule[-\dimexpr(#1-\dimen0)/2]{0pt}{#1}%
+% }
+
+\newcommand{\myindent}[1]{
+\newline\makebox[#1cm]{}
+}
+
+\newcommand{\veryshortarrow}[1][6pt]{\mathrel{%
+   \hbox{\rule[\dimexpr\fontdimen22\textfont2-.2pt\relax]{#1}{.4pt}}%
+   \mkern-4mu\hbox{\usefont{U}{lasy}{m}{n}\symbol{41}}}}
+
+\usepackage{amsmath}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setcounter{page}{1} % start with first page
 
@@ -124,12 +156,12 @@
 \addplot[black, mark = Mercedes star, mark options={fill=white}, thick] table [x=year, y=ratio, col sep=comma] {a1_inter_transmission_over_total_transmission_5_year_buckets_350_years.csv};
 
 \begin{scope}
-	\draw (180,.2) -- 
-		plot[mark=10-pointed star, mark options={fill=white}] (190,.2) -- (200,.2) 
-		node[right]{inner-city to inter-city};
-	\draw (180,.125) -- 
-		plot[mark=Mercedes star, mark options={fill=white}] (190,.125) -- (200,.125) 
-		node[right]{inter-city to inner-city};
+	\draw (250,.2) -- 
+		plot[mark=10-pointed star, mark options={fill=white}] (260,.2) -- (270,.2) 
+		node[right]{inner-city};
+	\draw (250,.125) -- 
+		plot[mark=Mercedes star, mark options={fill=white}] (260,.125) -- (270,.125) 
+		node[right]{inter-city};
 	\draw[red, dashed] (0,.5) -- 
 		 (350,.5);
 \end{scope}
@@ -165,12 +197,12 @@
 \addplot[black, mark = Mercedes star, mark options={fill=white}, thick] table [x=year, y=ratio, col sep=comma] {a1_inter_transmission_over_total_transmission_5_year_buckets_600_years.csv};
 
 \begin{scope}
-	\draw (180,.2) -- 
-		plot[mark=10-pointed star, mark options={fill=white}] (190,.2) -- (200,.2) 
-		node[right]{inner-city to inter-city};
-	\draw (180,.125) -- 
-		plot[mark=Mercedes star, mark options={fill=white}] (190,.125) -- (200,.125) 
-		node[right]{inter-city to inner-city};
+	\draw (450,.16) -- 
+		plot[mark=10-pointed star, mark options={fill=white}] (460,.16) -- (470,.16) 
+		node[right]{inner-city};
+	\draw (450,.085) -- 
+		plot[mark=Mercedes star, mark options={fill=white}] (460,.085) -- (470,.085) 
+		node[right]{inter-city};
 	\draw[red, dashed] (0,.5) -- 
 		 (630,.5);
 \end{scope}
@@ -198,7 +230,7 @@
 \scalebox{0.8}{
 \begin{tabular}{|E|E|W|E|E|E|W|E|E|E|}
 \hline
-\multicolumn{2}{|c|}{\multirow{2}{*}{year span}} & \multirow{2}{2cm}{\centering transmitter max ratio} & \multirow{2}{*}{inner} & \multirow{2}{*}{inter} & \multirow{2}{*}{ratio} & \multirow{2}{2cm}{\centering transmitter max ratio} & \multirow{2}{*}{inner} & \multirow{2}{*}{inter} & \multirow{2}{*}{ratio} \\
+\multicolumn{2}{|c|}{\multirow{2}{*}{year span}} & \multirow{2}{2cm}{\centering transmitter} & \multirow{2}{*}{inner} & \multirow{2}{*}{inter} & \multirow{2}{*}{ratio} & \multirow{2}{2cm}{\centering transmitter} & \multirow{2}{*}{inner} & \multirow{2}{*}{inter} & \multirow{2}{*}{ratio} \\
 \multicolumn{2}{|c|}{\hphantom{a}} & & & & & & & & \\
 \hline
 -11 & 0 & 4049 & 2543 & 1 & 0.9996 & 3436 & 8849 & 4574 & 0.6592\\ 
@@ -284,7 +316,7 @@
 \scalebox{0.8}{
 \begin{tabular}{|E|E|W|E|E|E|W|E|E|E|}
 \hline
-\multicolumn{2}{|c|}{\multirow{2}{*}{year span}} & \multirow{2}{2cm}{\centering transmitter max ratio} & \multirow{2}{*}{inner} & \multirow{2}{*}{inter} & \multirow{2}{*}{ratio} & \multirow{2}{2cm}{\centering transmitter max ratio} & \multirow{2}{*}{inner} & \multirow{2}{*}{inter} & \multirow{2}{*}{ratio} \\
+\multicolumn{2}{|c|}{\multirow{2}{*}{year span}} & \multirow{2}{2cm}{\centering transmitter} & \multirow{2}{*}{inner} & \multirow{2}{*}{inter} & \multirow{2}{*}{ratio} & \multirow{2}{2cm}{\centering transmitter} & \multirow{2}{*}{inner} & \multirow{2}{*}{inter} & \multirow{2}{*}{ratio} \\
 \multicolumn{2}{|c|}{\hphantom{a}} & & & & & & & & \\
 \hline
 -11 & 0 & 30371 & 1 & 770 & 0.9987 & 3795 & 6261 & 14005 & 0.691\\
