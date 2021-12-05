@@ -1,3 +1,3 @@
 # DS-H-Inner-vs-Inter-Transmission
 
-See [paper](paper.pdf).
+See [figures](figures.pdf) and [appendix](appendix.pdf).
