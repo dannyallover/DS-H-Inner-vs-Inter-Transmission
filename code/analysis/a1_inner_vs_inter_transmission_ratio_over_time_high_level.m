@@ -214,11 +214,11 @@
 
 
 (* ::Input:: *)
-(*Export["data/analysis/a1_inner_transmission_over_total_transmission_5_year_buckets_350_years.csv",innerbuckets5Final[[;;75]]];*)
+(*(*Export["data/analysis/a1_inner_transmission_over_total_transmission_5_year_buckets_350_years.csv",innerbuckets5Final[[;;75]]];*)*)
 
 
 (* ::Input:: *)
-(*Export["data/analysis/a1_inter_transmission_over_total_transmission_5_year_buckets_350_years.csv",interbuckets5Final[[;;75]]];*)
+(*(*Export["data/analysis/a1_inter_transmission_over_total_transmission_5_year_buckets_350_years.csv",interbuckets5Final[[;;75]]];*)*)
 
 
 (* ::Input:: *)
@@ -226,8 +226,8 @@
 
 
 (* ::Input:: *)
-(*Export["data/analysis/a1_inner_transmission_over_total_transmission_5_year_buckets_600_years.csv",innerbuckets5Final[[;;125]]];*)
+(*(*Export["data/analysis/a1_inner_transmission_over_total_transmission_5_year_buckets_600_years.csv",innerbuckets5Final[[;;125]]];*)*)
 
 
 (* ::Input:: *)
-(*Export["data/analysis/a1_inter_transmission_over_total_transmission_5_year_buckets_600_years.csv",interbuckets5Final[[;;125]]];*)
+(*(*Export["data/analysis/a1_inter_transmission_over_total_transmission_5_year_buckets_600_years.csv",interbuckets5Final[[;;125]]];*)*)

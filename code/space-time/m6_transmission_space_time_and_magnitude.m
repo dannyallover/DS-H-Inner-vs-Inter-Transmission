@@ -68,15 +68,15 @@
 (*(*for each transmission we seek the taraf count*)*)
 
 
-(* ::Input::SemiBold:: *)
+(* ::Input:: *)
 (*edgeToCounts=ToExpression[Import["data/base/xxx_edge_to_isnad_count_hadith_count_taraf_count.csv","CSV"]];*)
 
 
-(* ::Input::SemiBold:: *)
+(* ::Input:: *)
 (*edgeToCounts[[1]]*)
 
 
-(* ::Input::SemiBold:: *)
+(* ::Input:: *)
 (*edgeToCounts=Association[Table[edgeToCounts[[i,1]]->{edgeToCounts[[i,2,1]],edgeToCounts[[i,2,2]],edgeToCounts[[i,2,3]]},{i,1,Length[edgeToCounts],1}]];*)
 
 
