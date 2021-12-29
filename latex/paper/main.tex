@@ -88,11 +88,11 @@
 \hspace*{-2cm}
 \includegraphics[scale=0.9]{edges-to-city-network/b2_edges_to_city_network.pdf}
 
-\section{Bird's-eye View First 400 Years}
+\section{Bird's-eye View First 350 Years}
 \begin{center}
 \begin{tikzpicture}[scale=.95]
 \begin{axis}[
-    xmin = 0, xmax = 350,
+    xmin = 0, xmax = 360,
     ymin = 0, ymax = 1,
     xtick distance = 20,
     ytick distance = 0.10,
@@ -109,14 +109,14 @@
 \addplot[black, mark = Mercedes star, mark options={fill=white}, thick] table [x=year, y=ratio, col sep=comma] {a1_inter_transmission_over_total_transmission_5_year_buckets_350_years.csv};
 
 \begin{scope}
-	\draw (250,.2) -- 
-		plot[mark=10-pointed star, mark options={fill=white}] (260,.2) -- (270,.2) 
+	\draw (250,20) -- 
+		plot[mark=10-pointed star, mark options={fill=white}] (260,20) -- (270,20) 
 		node[right]{inner-city};
-	\draw (250,.125) -- 
-		plot[mark=Mercedes star, mark options={fill=white}] (260,.125) -- (270,.125) 
+	\draw (250,15) -- 
+		plot[mark=Mercedes star, mark options={fill=white}] (260,15) -- (270,15) 
 		node[right]{inter-city};
-	\draw[red, dashed] (0,.5) -- 
-		 (350,.5);
+	\draw[red, dashed] (0+11,50) -- 
+		 (362,50);
 \end{scope}
 
 % \legend{
@@ -128,7 +128,7 @@
 \end{center}
 
 \newpage
-\section{Bird's-eye View First 630 Years}
+\section{Bird's-eye View First 600 Years}
 
 \begin{center}
 \begin{tikzpicture}[scale=.95]
@@ -150,14 +150,14 @@
 \addplot[black, mark = Mercedes star, mark options={fill=white}, thick] table [x=year, y=ratio, col sep=comma] {a1_inter_transmission_over_total_transmission_5_year_buckets_600_years.csv};
 
 \begin{scope}
-	\draw (450,.16) -- 
-		plot[mark=10-pointed star, mark options={fill=white}] (460,.16) -- (470,.16) 
+	\draw (430,15) -- 
+		plot[mark=10-pointed star, mark options={fill=white}] (440,15) -- (450,15) 
 		node[right]{inner-city};
-	\draw (450,.085) -- 
-		plot[mark=Mercedes star, mark options={fill=white}] (460,.085) -- (470,.085) 
+	\draw (430,10) -- 
+		plot[mark=Mercedes star, mark options={fill=white}] (440,10) -- (450,10) 
 		node[right]{inter-city};
-	\draw[red, dashed] (0,.5) -- 
-		 (630,.5);
+	\draw[red, dashed] (0+11,50) -- 
+		 (615,50);
 \end{scope}
 
 % \legend{
