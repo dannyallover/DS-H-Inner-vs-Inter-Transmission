@@ -1,3 +1,3 @@
-# Digital Humanities: Hadith Inner vs Inter Transmission
+# Computational Hadith: Inner vs Inter Transmission
 
 See [figures](figures.pdf) and [appendix](appendix.pdf).
